@@ -1,0 +1,45 @@
+<div class="container color-dark">
+	<div class="col">
+		<p>Add a bucket list of goals</p>
+	</div>
+	<div class="col">
+		<p>Your bucket list({{ itemCount }}) <b><i>Click on each item to remove it</i></b></p>
+
+		<div *ngIf="itemCount > 3">
+			
+				<input type="text" class="txt" [(ngModel)]="goalTextSearch" placeholder="Type here to search..." >
+			
+		</div>
+
+	</div>
+</div>
+
+<div class="container color-light">
+	<div class="col">
+		<p class="sm">Use this form below to add a new bucket list goal. What do you want to do with your life .</p>
+
+		<form #goal = "ngForm">
+			<input type="text" class="txt" name="goalText" placeholder="Life goal.."  
+			[(ngModel)]="goalText" required>
+			
+			<button type="submit" class="btn" [disabled]="goal.invalid" (click)="addGoal()" >Add goal</button>
+		</form>
+	</div>
+	<div class="col">
+		<div *ngFor="let goal of goals?.reverse() | filter: goalTextSearch | paginate: { itemsPerPage:3, currentPage: i }; let i = index" (click)="removeGoal(goal)">
+			<p class="life-container">
+				{{goal}}
+			</p>
+
+		</div>
+		<div *ngIf="itemCount > 3">
+			<pagination-controls (pageChange)="i=$event"></pagination-controls>
+		</div>
+		
+			
+		
+		
+	</div>
+</div>
+
+
